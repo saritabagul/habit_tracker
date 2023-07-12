@@ -1,0 +1,30 @@
+:root{
+    --main-bg:#e7d6ec;
+    /* --main-bg:#ffffff; */
+    --item-bg:#c880d9;
+  }
+  
+  .main-bg {
+    background: var(--main-bg) !important;
+  }
+  
+  input:focus, button:focus {
+    border: 1px solid var(--main-bg) !important;
+    box-shadow: none !important;
+  }
+  
+ .submit-btn{
+    background: var(--item-bg) !important;
+ }
+ .submit-btn:hover{
+    background: #c880d9 !important;
+ }
+  
+  .card, .btn, input{
+    border-radius:0 !important;
+  }
+  
+  .card-header{
+    background: var(--item-bg) !important;
+    color:white !important;
+  }

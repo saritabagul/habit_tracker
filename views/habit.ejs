@@ -1,1 +1,46 @@
-<h1>Habit</h1>
+<div class="container">
+    <div class="row justify-content-center mt-3">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="card shadow">
+          <div class="card-title text-center border-bottom">
+            <h2 class="p-2">Add habit to track</h2>
+          </div>
+          <div class="card-body">
+            <form id="new-habit-form">
+              <div class="mb-3">
+                <label for="habit" class="form-label">Habit Name</label>
+                <input type="text" class="form-control" name="habit" id="habit" placeholder="Enter Habit..."/>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Goal</label>
+                <input type="text" class="form-control" name="description" id="description" placeholder="Enter Your Goal..."/>
+              </div>
+             
+              <div class="d-grid">
+                <button type="submit" class="btn text-light submit-btn"><strong>Add Habit</strong></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3" style="margin-bottom:5%" id="habit-list-container">
+      <% for(ht of habit) { %>
+        <div class="card mt-2" id="habit-<%= ht._id %>">
+        <div class="card-header">
+         <%= ht.habit %> 
+        </div>
+        <div class="card-body">
+          <p class="card-text"><%= ht.description %> </p>
+          <p class="card-text">Streak: <%= ht.streak %>/7</p>
+          <a  class="btn btn-primary submit-btn delete-habit-button" href="/habit/destroy/<%= ht._id %>">Remove <i class="fa fa-xmark"></i></a>
+          <!-- <a href="#" class="btn btn-primary submit-btn">Remove <i class="fa fa-xmark"></i></a> -->
+        </div>
+        </div>
+        <% } %>
+        
+     </div> 
+  </div>
+
+  <script src="/js/habit.js"></script>
