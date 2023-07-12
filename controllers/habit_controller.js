@@ -20,9 +20,7 @@ module.exports.create = async function(req, res){
             habit: req.body.habit,
             description: req.body.description        
         });
-
-        
-        
+         
         if (req.xhr){            
             return res.status(200).json({
                 data: {

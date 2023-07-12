@@ -1,4 +1,22 @@
 {   
+
+    // function to make searchbar work
+function search_habit() { 
+    let input = document.getElementById('searchbar').value;
+    input=input.toLowerCase(); 
+    let x = document.getElementsByClassName('habit'); 
+      
+    for (i = 0; i < x.length; i++) {  
+        if (!x[i].innerHTML.toLowerCase().includes(input)) { 
+            x[i].style.display="none"; 
+        } 
+        else { 
+            x[i].style.display="block";                  
+        } 
+    } 
+} 
+
+
     // method to submit the form data for new habit using AJAX
     let createHabit = function(){
         let newHabitForm = $('#new-habit-form');
@@ -7,7 +25,7 @@
             e.preventDefault();
 
             $.ajax({
-                type: 'habit',
+                type: 'post',
                 url: '/habit/create',
                 data: newHabitForm.serialize(),
                 success: function(data){
@@ -16,6 +34,7 @@
                    $('#habit-list-container').prepend(newHabit);
                    deleteHabit($(` .delete-habit-button`,newHabit)); 
                    setFlash("success","Habit Created Successfully!");
+                   $('#new-habit-form')[0].reset();
                 }, error: function(error){
                     console.log(error.responseText);
                 }
