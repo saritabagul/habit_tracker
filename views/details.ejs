@@ -1,0 +1,108 @@
+<!-- <link rel="stylesheet" href="/css/details.css"> -->
+<div class="container">
+    <h1 class="mt-3">Weekly Summary <a  class="btn btn-primary submit-btn delete-habit-button float-center" href="/">Add habits</a>
+    </h1>
+         
+    <div class="row justify-content-center mt-3 mb-5">
+
+        <% habit.forEach(habits=> {
+            let tzoffset = (new Date()).getTimezoneOffset() * 60000, found=false, status='';
+            var today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
+            habits.dates.find(function (item, index) {
+            if(item.date === today){
+            found = true;
+            status = item.complete;
+            }
+            });
+            %>
+            <div class="col-md-8 habit">
+                <div class='shadow-sm rounded  mt-3 p-4 bg-white '>
+                    <div>
+                        <span class="card-header mt-2  rounded">
+                            <%= habits.habit %>
+                        </span>
+                        <!-- Date  -->
+                        <span class="card-head2 mt-3 rounded  ms-4"><i>
+                                Weekly
+                            </i> </span>
+                    </div>
+
+                    <!-- Delete Habit -->
+                    <div class='float-end shadow-sm me-2 justify-content-center' style="
+                        margin-top: -30px;
+                    ">
+                        <a href="/habit/destroy/<%= habits._id %>" class='btn submit-btn delete-habit-button' id="button"><i class="fa fa-xmark"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-10 justify-content-center habit-days mt-3 "
+                        style="margin-left: auto; margin-right: auto; width: 100%; padding-top: 30px;">
+                        <% days.forEach(day=> { let found = false, status = '';
+                            habits.dates.find(function (item, index) {
+                            if(item.date === day.date)
+                            {
+                            found = true;
+                            status = item.complete;
+                            }
+                            });
+                            %>
+
+                            <div>
+
+                                <table class="table table-bordered">
+
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="circular-progress">
+
+                                                    <div class="value-container">
+                                                        <%= day.day %> <br>
+                                                            <span>
+                                                                <%= day.date.slice(-2) %>
+                                                            </span>
+                                                    </div>
+
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td class="pb-3" style="text-align: center;">
+                                                <a href="/habit/habitStatus/?id=<%= habits._id %>&date=<%= day.date %>">
+                                                    <% if(found && status==='yes' ){ %>
+                                                        <abbr title="Click to Undone :(">
+                                                            <i class="fa-solid fa-circle-check fa-2x"
+                                                                style="color: green;"></i>
+                                                        </abbr>
+                                                        <% } else if(found && status==='no' ){ %>
+
+                                                            <abbr title="Click for Default Value"><i
+                                                                    class="fa-sharp fa-solid fa-circle-xmark fa-2x"
+                                                                    style="color: red;"></i></abbr>
+                                                            <% } else { %>
+
+                                                                <abbr title="Click to mark Done!">
+                                                                    <i class="fa-solid fa-circle-minus fa-2x"></i>
+                                                                    <% } %>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                            <% }) %>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+</div>
+<script src="/js/habit.js"></script>
+<script>
+    $('[data-toggle="tooltip"]').tooltip({ 'placement': 'bottom' });
+</script>

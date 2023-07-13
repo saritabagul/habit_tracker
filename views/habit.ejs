@@ -1,3 +1,4 @@
+
 <div class="container">
     <div class="row justify-content-center mt-3">
       <div class="col-lg-6 col-md-6 col-sm-6">
@@ -30,13 +31,44 @@
         <div class="card mt-2 habit" id="habit-<%= ht._id %>">
         <div class="card-header">
          <%= ht.habit %> 
+         <span class="float-end"><%=  ht.createdAt.toLocaleDateString([], {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }) %></span>
         </div>
         <div class="card-body">
           <p class="card-text"><%= ht.description %> </p>
-          <p class="card-text">Streak: <%= ht.streak %>/7</p>
+          <p class="card-text">Streak: <%= ht.streak %></p>
           <a  class="btn btn-primary submit-btn delete-habit-button" href="/habit/destroy/<%= ht._id %>">Remove <i class="fa fa-xmark"></i></a>
-          <!-- <a href="#" class="btn btn-primary submit-btn">Remove <i class="fa fa-xmark"></i></a> -->
-        </div>
+          <% let tzoffset = (new Date()).getTimezoneOffset() * 60000, found=false, status='';
+            var today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
+            ht.dates.find(function (item, index) {
+            if(item.date === today){
+            found = true;
+            status = item.complete;
+            }
+            });         
+            
+            %>
+            <a class="btn" href="/habit/habitStatus/?id=<%= ht._id %>&date=<%= today %>">
+              <% if(found && status==='yes' ){ %>
+                  <abbr title="Click to Undone :(">
+                      <i class="fa-solid fa-circle-check fa-2x"
+                          style="color: green;"></i>
+                  </abbr>
+                  <% } else if(found && status==='no' ){ %>
+
+                      <abbr title="Click for Default Value"><i
+                              class="fa-sharp fa-solid fa-circle-xmark fa-2x"
+                              style="color: red;"></i></abbr>
+                      <% } else { %>
+
+                          <abbr title="Click to mark Done!">
+                              <i class="fa-solid fa-circle-minus fa-2x"></i>
+                              <% } %>
+          </a>
+         </div>
         </div>
         <% } %>
         
