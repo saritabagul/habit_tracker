@@ -19,10 +19,7 @@ module.exports.home = async function(req,res){
 //create and save the habits in db
 module.exports.create = async function(req, res){
     try{
-        let habit = await Habit.create({
-            habit: req.body.habit,
-            description: req.body.description        
-        });
+        let habit = await Habit.create(req.body);
          
         if (req.xhr){            
             return res.status(200).json({
@@ -149,11 +146,11 @@ module.exports.details = async function(req,res){
                
                 if(streak < 0){
                     streak=0;
-                }
-              
+                }             
                 habit.streak = streak;
                 habit.dates = dates;
                 habit.save();
+                req.flash('success','Status updated successfully!');
                 return res.redirect('back');
             }else{
                 return res.redirect('back');
