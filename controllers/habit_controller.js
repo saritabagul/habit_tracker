@@ -66,7 +66,7 @@ module.exports.destroy = async function(req,res){
 module.exports.details = async function(req,res){
     try{
 
-        await Habit.find().select('-updatedAt -createdAt -__v').sort({ _id: -1 })
+        await Habit.find().select('-updatedAt -__v').sort({ _id: -1 })
         .then(habits => {
             var days = [];
             days.push(getD(0));
